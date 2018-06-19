@@ -251,12 +251,16 @@ private:
 		void reset() { scanner.reset(); ast.reset(); }
 	};
 
+	/// The state per contract.
 	struct Contract
 	{
 		ContractDefinition const* contract = nullptr;
 		std::shared_ptr<Compiler> compiler;
+		/// Deployment object (includes the runtime sub-object).
 		eth::LinkerObject object;
+		/// Runtime object.
 		eth::LinkerObject runtimeObject;
+		/// Clone object (deprecated).
 		eth::LinkerObject cloneObject;
 		std::string metadata; ///< The metadata json that will be hashed into the chain.
 		mutable std::unique_ptr<Json::Value const> abi;
@@ -285,6 +289,9 @@ private:
 		ContractDefinition const& _contract,
 		std::map<ContractDefinition const*, eth::Assembly const*>& _compiledContracts
 	);
+
+	/// Links all the known library addresses in the available objects. Any unknown
+	/// library will still be kept as an unlinked placeholder in the objects.
 	void link();
 
 	Contract const& contract(std::string const& _contractName) const;
@@ -328,8 +335,9 @@ private:
 	std::vector<Remapping> m_remappings;
 	std::map<std::string const, Source> m_sources;
 	std::shared_ptr<GlobalContext> m_globalContext;
-	std::map<ASTNode const*, std::shared_ptr<DeclarationContainer>> m_scopes;
 	std::vector<Source const*> m_sourceOrder;
+	// updated during compilation
+	std::map<ASTNode const*, std::shared_ptr<DeclarationContainer>> m_scopes;
 	std::map<std::string const, Contract> m_contracts;
 	ErrorList m_errorList;
 	ErrorReporter m_errorReporter;
