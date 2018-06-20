@@ -122,6 +122,8 @@ public:
 		m_optimizeRuns = _runs;
 	}
 
+	/// Set the EVM version used before running compile.
+	/// When called without an argument it will revert to the default version (currently Byzantium).
 	void setEVMVersion(EVMVersion _version = EVMVersion{});
 
 	/// Sets the list of requested contract names. If empty, no filtering is performed and every contract
