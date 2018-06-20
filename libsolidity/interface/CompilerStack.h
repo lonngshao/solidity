@@ -296,7 +296,12 @@ private:
 	/// library will still be kept as an unlinked placeholder in the objects.
 	void link();
 
+	/// @returns the contract object for the given @a _contractName.
+	/// Can only be called after state is CompilationSuccessful.
 	Contract const& contract(std::string const& _contractName) const;
+
+	/// @returns the source object for the given @a _sourceName.
+	/// Can only be called after state is SourcesSet.
 	Source const& source(std::string const& _sourceName) const;
 
 	/// @returns the parsed contract with the supplied name. Throws an exception if the contract
