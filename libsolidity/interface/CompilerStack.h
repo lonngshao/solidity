@@ -301,12 +301,25 @@ private:
 	/// does not exist.
 	ContractDefinition const& contractDefinition(std::string const& _contractName) const;
 
+	/// @returns the metadata JSON as a compact string for the given contract.
 	std::string createMetadata(Contract const& _contract) const;
+
 	/// @returns the metadata CBOR for the given serialised metadata JSON.
 	static bytes createCBORMetadata(std::string _metadata, bool _experimentalMode);
+
+	/// @returns the computer source mapping string.
 	std::string computeSourceMapping(eth::AssemblyItems const& _items) const;
+
+	/// @returns the contract ABI as a JSON object.
+	/// This will generate the JSON object and store it in the Contract object if it is not present yet.
 	Json::Value const& contractABI(Contract const&) const;
+
+	/// @returns the Natspec User documentation as a JSON object.
+	/// This will generate the JSON object and store it in the Contract object if it is not present yet.
 	Json::Value const& natspecUser(Contract const&) const;
+
+	/// @returns the Natspec Developer documentation as a JSON object.
+	/// This will generate the JSON object and store it in the Contract object if it is not present yet.
 	Json::Value const& natspecDev(Contract const&) const;
 
 	/// @returns the offset of the entry point of the given function into the list of assembly items
